@@ -1,0 +1,205 @@
+*{
+  margin:0;
+  padding:0;
+  font-family: 'Roboto', sans-serif ;
+}
+
+body{
+
+  display:grid;
+  justify-content: center;
+}
+/*----- Display calculadora -----*/
+
+.calculator{
+  max-width: 420px;
+}
+.calculator-history{
+  display:flex;
+  flex-direction:column-reverse;
+  width: 95%;
+  color: #B6B6B6;
+
+  
+  text-align: right;
+  font-size: 24px;
+  font-weight: bold;
+  height:85%;
+}
+
+.screen-result{
+  background: #E5E5E5;
+  display: flex;
+  flex-direction:column;
+
+  margin-left: 1.25rem; 
+  margin-top: 2rem; 
+  width:90%;
+  height: 18.75rem;
+
+  -webkit-border-radius: 42px;
+  -moz-border-radius: 42px;
+  border-radius: 42px;
+  -webkit-box-shadow: 0px 10px 5px 0px rgba(0,0,0,0.25);
+  -moz-box-shadow: 0px 10px 5px 0px rgba(0,0,0,0.25);
+  box-shadow: 0px 10px 5px 0px rgba(0,0,0,0.25);
+}
+.calculator-numbers{
+  display:flex;
+  justify-content:flex-end;
+
+  width:97%;
+
+}
+.calculator-numbers input{
+  background:none;
+  border:none;
+  
+  width: 55%;
+  color: #3F4556;
+
+  text-align:right;
+  font-size: 48px;
+  font-weight: bold;
+  font-family: 'Roboto', sans-serif;
+}
+
+.calculator-numbers label{
+  color: #3F4556;
+
+  font-size: 48px;
+  font-weight: bold;
+  font-family: 'Roboto', sans-serif;
+}
+
+/*----- Teclado numérico -----*/
+.keyboard{
+  display:grid;
+  grid-gap: 0.75rem;
+  grid-template-areas:
+  ' C D division multiplication '
+  ' seven eight nine subtraction'
+  ' four five six addition'
+  ' one two three equal'
+  ' percent zero dot equal'
+  ;
+  
+  margin-top:1.75rem;
+  margin-left:1.18rem;
+}
+
+.calculator-button{
+  background:#353742;
+  display: flex;
+  
+  justify-content:center;
+  align-items:center;
+
+  height: 80px;
+  width: 80px;
+  
+  color: #fff;
+  font-size: 64px;
+  font-weight: bold;
+  text-align:center;
+  
+  border:none;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  
+}
+
+
+/*-------- Button numbers -------*/
+
+.b-C{
+  background: #FF806E;
+  grid-area: C;
+}
+
+.b-D{
+  color: #FF806E;
+  grid-area: D;
+}
+
+.b-division{
+  color: #FF806E;
+  grid-area: division;
+}
+
+.b-multiplication{
+  color: #FF806E;
+  grid-area: multiplication;
+}
+
+.b-addition{
+  color: #FF806E;
+  grid-area: addition;
+}
+
+.b-subtraction{
+  color: #FF806E;
+  grid-area: subtraction;
+}
+
+.b-zero{
+  grid-area: zero;
+}
+
+.b-one{
+  grid-area: one;
+}
+
+.b-two{
+  grid-area: two;
+}
+
+.b-three{
+  grid-area: three;
+}
+
+.b-four{
+  grid-area: four;
+}
+
+.b-five{
+  grid-area: five;
+}
+
+.b-six{
+  grid-area: six;
+}
+
+.b-seven{
+  grid-area: seven;
+}
+
+.b-eight{
+  grid-area: eight;
+}
+
+.b-nine{
+  grid-area: nine;
+}
+
+.b-equal{
+  background: #FF806E;
+  height: 100%;
+  grid-area: equal;
+
+  -webkit-border-radius: 180px;
+  -moz-border-radius: 180px;
+  border-radius: 180px;
+}
+.b-percent{
+  color: #FF806E;
+  grid-area: percent;
+}
+
+.b-dot{
+
+  color: #FF806E;
+  grid-area: dot;
+}
+
