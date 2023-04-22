@@ -11,16 +11,15 @@
   <div class="calculator">
     <section class="screen-result">
       <div class="calculator-history">
-        <p>0</p>
       </div>
       
-      <form class="calculator-numbers">
+      <form id="form" name="calcula" class="calculator-numbers">
         <label for="input-number">=</label>
       <input class="input-number" type="number" placeholder="0"></input>
     </form>
   </section>
   <section class="keyboard">
-    <button type="button" class="calculator-button b-C">C</button>
+    <button type="button" name="C" class="calculator-button b-C">C</button>
     <button type="button" class="calculator-button b-D">D</button>
     <button type="button" class="calculator-button b-division">/</button>
     <button type="button" class="calculator-button b-multiplication">X</button>
@@ -35,11 +34,13 @@
     <button type="button" class="calculator-button b-one">1</button>
     <button type="button" class="calculator-button b-two">2</button>
     <button type="button" class="calculator-button b-three">3</button>
-    <button type="button" class="calculator-button b-equal">=</button>
-    <button type="button" class="calculator-button b-percent"></button>
+    <button type="submit" form="form" class="calculator-button b-equal">=</button>
+    <button type="button" class="calculator-button b-percent"> </button>
     <button type="button" class="calculator-button b-zero">0</button>
     <button type="button" class="calculator-button b-dot">.</button>
   </section>
 </div>
+
+<script type="text/javascript" src="js/main.js"></script>
 </body>
 </html>

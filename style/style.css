@@ -2,6 +2,8 @@
   margin:0;
   padding:0;
   font-family: 'Roboto', sans-serif ;
+
+  list-style: none;
 }
 
 body{
@@ -16,7 +18,9 @@ body{
 }
 .calculator-history{
   display:flex;
-  flex-direction:column-reverse;
+  flex-direction: column;
+  justify-content: flex-end;
+
   width: 95%;
   color: #B6B6B6;
 
@@ -72,6 +76,21 @@ body{
   font-family: 'Roboto', sans-serif;
 }
 
+.operator-number{
+  display: flex;
+  justify-content: flex-end;
+
+  border-top: 1px solid #B6B6B6;
+  height:10%;
+}
+
+.number-list{
+  width: 55%;
+}
+
+.operator-list{
+  width: 45%;
+}
 /*----- Teclado numérico -----*/
 .keyboard{
   display:grid;
