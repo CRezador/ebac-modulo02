@@ -1,7 +1,7 @@
 const FORM = document.querySelector(".calculator-numbers");
 const KEYBOARD = document.querySelector(".keyboard");
 const SCREEN = document.querySelector(".input-number");
-const HISTORY = document.querySelector(".calculator-history");
+const STORAGE = document.querySelector(".calculator-storage");
 
 
 //Storage
@@ -15,13 +15,13 @@ let operator =  JSON.parse(localStorage.getItem('operator')) || [];
 window.onload = () =>{
   if(!operationResult.length)
    return
-  loadHistory(true);
+  loadStorage(true);
 } 
 
 //recebendo os valores e fazendo o calculo
 FORM.addEventListener('submit', (e) =>{
   e.preventDefault();
-  generateOperation(SCREEN.value, "=", refresh);
+  generateOperation(SCREEN.value, "=", false);
 });
 
 KEYBOARD.addEventListener('click', (e) =>{
@@ -33,27 +33,31 @@ KEYBOARD.addEventListener('click', (e) =>{
       /*
           Fazer tratamento para apagar o histórico
       */  
-      SCREEN.value = "0";
+      SCREEN.value = "";
       break;
     case "D":
-      deleteHistory();
-      SCREEN.value = "0";
+      deleteStorage();
+      SCREEN.value = "";
       break;
     case "/":
-      generateOperation(SCREEN.value, target, refresh)
-      SCREEN.value = "0";
+      if(!validaDivisao(SCREEN.value)){
+        Alert("Não é possível dividir um número por zero!");
+      }else{
+        generateOperation(SCREEN.value, target, true);
+      }
+      SCREEN.value = "";
       break;
     case "X":
-      generateOperation(SCREEN.value, target, refresh)
-      SCREEN.value = "0";
+      generateOperation(SCREEN.value, target, true);
+      SCREEN.value = "";
       break;
     case "-":
-      generateOperation(SCREEN.value, target, refresh)
-      SCREEN.value = "0";
+      generateOperation(SCREEN.value, target, true);
+      SCREEN.value = "";
       break;
     case "+":
-      generateOperation(SCREEN.value, target, refresh)
-      SCREEN.value = "0";
+      generateOperation(SCREEN.value, target, true);
+      SCREEN.value = "";
       break;
     case "=":
       break;
@@ -68,14 +72,14 @@ KEYBOARD.addEventListener('click', (e) =>{
 //--------------FUNCTIONS
 
 //carrega as ultimas operações
-function loadHistory(isRefresh = false){
+function loadStorage(isRefresh = false){
 
   if(isRefresh){
     number = [];
     operator = [];
   }
   const html = ` 
-  <div class"results-history">
+  <div class"results-storage">
     <ul>
       ${operationResult.map( result =>{
         return `<li><span class="operation-result">${result}</span></li>`
@@ -91,11 +95,7 @@ function loadHistory(isRefresh = false){
     </ul>
   </div>`;
 
-  HISTORY.innerHTML = html;
-}
-//valida qual operação será calculada
-function validaOperacao(){
-
+  STORAGE.innerHTML = html;
 }
 
 //adiciona um numero no input
@@ -109,11 +109,11 @@ function geraNumero(dig){
 //reseta o gerador de numero
 function resetNumberGenerator(){
   numberGenerator = [];
-  loadHistory();
+  loadStorage();
 }
 
 //Confirmar um número gerado e gera um calculo, caso necessário
-function generateOperation(num, opp, isRefresh){
+function generateOperation(num, opp, isRefresh = true){
   let results;
   let mathOperationButtonsIsPressed = true;
   if(number.length && !isRefresh){
@@ -124,15 +124,19 @@ function generateOperation(num, opp, isRefresh){
         switch(opp){
           case "+":
             results = parseFloat(number[number.length - 1]) + parseFloat(num);
+            number.push(num);
           break;
           case "-":
             results = parseFloat(number[number.length - 1]) - parseFloat(num);
+            number.push(num);
           break;
           case "X":
             results = parseFloat(number[number.length - 1]) * parseFloat(num);
+            number.push(num);
           break;  
-          case "/":
+          case "/":          
             results = parseFloat(number[number.length - 1]) / parseFloat(num);
+            number.push(num);
           break;
           
         }
@@ -146,7 +150,7 @@ function generateOperation(num, opp, isRefresh){
 }
 
 //Limpa o histórico de operações
-function deleteHistory(){
+function deleteStorage(){
   saveStorage(null,null);
   resetNumberGenerator();
 }
@@ -186,14 +190,23 @@ function saveStorage(num, opp, saveResult = false, mathOperationButtonsIsPressed
     if(mathOperationButtonsIsPressed){
       operationResult.push(`${operator[operator.length - 1]}          ${number[number.length - 1]}`);
     }else{
-      operationResult.push(`${number[number.length - 2]} ${operator[operator.length - 1]} ${number[number.length - 1]} = ${num}`);
+      operationResult.push(`${number[number.length - 3]} ${operator[operator.length - 1]} ${number[number.length - 2]} = ${num}`);
     }
     localStorage.setItem('operationResult', JSON.stringify(operationResult));
-    loadHistory(false, false)
+    loadStorage(false, false)
     return
   }
-
+  
   localStorage.setItem('number', JSON.stringify(number));
   localStorage.setItem('operator', JSON.stringify(operator));
-  loadHistory()
+  loadStorage()
+}
+
+function validaDivisao(num){
+  if(num === "0"){
+    
+    return false
+  }
+
+  return true
 }
