@@ -98,6 +98,41 @@ function loadStorage(isRefresh = false){
   STORAGE.innerHTML = html;
 }
 
+//Salva o dados da operação no storage
+function saveStorage(num, opp, saveResult = false, mathOperationButtonsIsPressed = true){
+  if((num != null) && (opp != null))
+  {
+    number.push(num);
+    operator.push(opp);
+    if((number.length && operator.length) > 4){
+      number.shift();
+      operator.shift() ;
+    }
+    if(operationResult.length > 6){
+      operationResult.shift();
+    }
+  }else{
+    number = [];
+    operator = [];
+    operationResult = [];
+  }
+
+  if(saveResult){
+    if(mathOperationButtonsIsPressed){
+      operationResult.push(`${operator[operator.length - 1]}          ${number[number.length - 1]}`);
+    }else{
+      operationResult.push(`${number[number.length - 3]} ${operator[operator.length - 1]} ${number[number.length - 2]} = ${num}`);
+    }
+    localStorage.setItem('operationResult', JSON.stringify(operationResult));
+    loadStorage(false, false)
+    return
+  }
+  
+  localStorage.setItem('number', JSON.stringify(number));
+  localStorage.setItem('operator', JSON.stringify(operator));
+  loadStorage()
+}
+
 //adiciona um numero no input
 function geraNumero(dig){
 
@@ -166,40 +201,6 @@ function validaGeracaoNum(){
   }
 
   return numero;
-}
-
-function saveStorage(num, opp, saveResult = false, mathOperationButtonsIsPressed = true){
-  if((num != null) && (opp != null))
-  {
-    number.push(num);
-    operator.push(opp);
-    if((number.length && operator.length) > 4){
-      number.shift();
-      operator.shift() ;
-    }
-    if(operationResult.length > 6){
-      operationResult.shift();
-    }
-  }else{
-    number = [];
-    operator = [];
-    operationResult = [];
-  }
-
-  if(saveResult){
-    if(mathOperationButtonsIsPressed){
-      operationResult.push(`${operator[operator.length - 1]}          ${number[number.length - 1]}`);
-    }else{
-      operationResult.push(`${number[number.length - 3]} ${operator[operator.length - 1]} ${number[number.length - 2]} = ${num}`);
-    }
-    localStorage.setItem('operationResult', JSON.stringify(operationResult));
-    loadStorage(false, false)
-    return
-  }
-  
-  localStorage.setItem('number', JSON.stringify(number));
-  localStorage.setItem('operator', JSON.stringify(operator));
-  loadStorage()
 }
 
 function validaDivisao(num){
