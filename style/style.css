@@ -6,15 +6,27 @@
   list-style: none;
 }
 
+
+
+
+
+
+
 body{
 
   display:grid;
   justify-content: center;
+
+  @include for-tablet-portrait-up{
+    background: black;
+  }
 }
 /*----- Display calculadora -----*/
 
 .calculator{
-  max-width: 420px;
+display: grid;
+justify-items: center;
+
 }
 .calculator-storage{
   display:flex;
@@ -32,11 +44,12 @@ body{
 }
 
 .screen-result{
+  max-width:450px;
   background: #E5E5E5;
   display: flex;
   flex-direction:column;
 
-  margin-left: 1.25rem; 
+
   margin-top: 2rem; 
   width:90%;
   height: 18.75rem;
@@ -93,6 +106,8 @@ body{
 }
 /*----- Teclado numérico -----*/
 .keyboard{
+  width:26.125rem;
+
   display:grid;
   grid-gap: 0.75rem;
   grid-template-areas:
@@ -220,5 +235,108 @@ body{
 
   color: #FF806E;
   grid-area: dot;
+}
+
+/* ---- media queries ---- */
+
+
+@media (min-width: 900px) { 
+  .screen-result{
+    min-width:750px;
+  }
+  .calculator-button{
+    height: 100%;
+    width: 100%;
+  
+    border:none;
+    -webkit-border-radius: 0%;
+    -moz-border-radius: 0%;
+    border-radius: 0%;
+  }
+
+  .keyboard{
+    min-width:750px;
+  }
+  .keyboard{
+    grid-template-areas:
+    ' seven eight nine C D'
+    ' four five six multiplication division'
+    ' one two three addition subtraction'
+    ' percent zero dot equal equal'
+    ;
+    
+    max-width:750px;
+    width:50%;
+    height:36rem;
+  }
+  
+  .calculator-button{
+    height: 100%;
+    width: 100%;
+  
+    border:none;
+    -webkit-border-radius: 0%;
+    -moz-border-radius: 0%;
+    border-radius: 0%;
+  }
+  
+
+.b-D{
+  color: #fff;
+  background: #FF806E;
+  grid-area: D;
+}
+
+.b-division{
+  color: #fff;
+  background: #FF806E;
+  grid-area: division;
+}
+
+.b-multiplication{
+  color: #fff;
+  background: #FF806E;
+  grid-area: multiplication;
+}
+
+.b-addition{
+  color: #fff;
+  background: #FF806E;
+  grid-area: addition;
+}
+
+.b-subtraction{
+  color: #fff;
+  background: #FF806E;
+  grid-area: subtraction;
+}
+.b-dot{
+  color: #fff;
+  background: #FF806E;
+}
+
+.b-equal{
+  color: #fff;
+  background: #FF806E;
+  height: 100%;
+  grid-area: equal;
+
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+}
+}
+
+@media (min-width: 1200px) { 
+  body{
+    display:block;
+  }
+
+  .screen-result{
+    max-width:750px;
+    width:50%;
+  }
+
+  
 }
 
