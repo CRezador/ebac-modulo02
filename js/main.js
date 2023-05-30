@@ -25,32 +25,48 @@ FORM.addEventListener('submit', (e) =>{
 });
 
 KEYBOARD.addEventListener('click', (e) =>{
-  var target = e.target.innerText;
-  var classe = e.target.className;
+  let target = e.target.innerText;
 
+  handleButtonPress(target);
+
+})
+
+window.addEventListener("keydown", (e) =>{
+  let target = e.key;
+  const KEYPRESS = true; 
+
+  handleButtonPress(target, KEYPRESS);
+})
+//--------------FUNCTIONS
+
+//Valida qual botão foi apertado
+function handleButtonPress(target, keyPress = false){
   switch(target){
     case "C":
-      /*
-          Fazer tratamento para apagar o histórico
-      */  
       SCREEN.value = "";
       break;
+    case "Backspace":
+      SCREEN.value = "";
     case "D":
       deleteStorage();
       SCREEN.value = "";
       break;
+    case "Delete":
+      deleteStorage();
+      SCREEN.value = "";      
+      break;
     case "/":
-      if(!validaDivisao(SCREEN.value)){
-        Alert("Não é possível dividir um número por zero!");
-      }else{
-        generateOperation(SCREEN.value, target, true);
-      }
+      generateOperation(SCREEN.value, target, true);     
       SCREEN.value = "";
       break;
     case "X":
       generateOperation(SCREEN.value, target, true);
       SCREEN.value = "";
       break;
+    case "*":
+      generateOperation(SCREEN.value, target, true);
+      SCREEN.value = "";
+      break;      
     case "-":
       generateOperation(SCREEN.value, target, true);
       SCREEN.value = "";
@@ -60,16 +76,22 @@ KEYBOARD.addEventListener('click', (e) =>{
       SCREEN.value = "";
       break;
     case "=":
+      if(keyPress){
+        generateOperation(SCREEN.value, "=", false);
+      }
+      break;
+    case "Enter":
+      if(keyPress){
+        generateOperation(SCREEN.value, "=", false);
+      }      
       break;
     default:
-      if(target[1] == null && classe !== "calculator-button b-percent"){
+      if (target >= 0 && target <= 9) {
         var numero = geraNumero(target);
         SCREEN.value = numero;
       }
     }
-})
-
-//--------------FUNCTIONS
+}
 
 //carrega as ultimas operações
 function loadStorage(isRefresh = false){
@@ -130,6 +152,7 @@ function saveStorage(num, opp, saveResult = false, mathOperationButtonsIsPressed
   
   localStorage.setItem('number', JSON.stringify(number));
   localStorage.setItem('operator', JSON.stringify(operator));
+  localStorage.setItem('operationResult', JSON.stringify(operationResult));
   loadStorage()
 }
 
@@ -138,7 +161,7 @@ function geraNumero(dig){
 
   numberGenerator.push(dig);
 
-  return validaGeracaoNum();
+  return handleGenerateNum();
 }
 
 //reseta o gerador de numero
@@ -169,16 +192,25 @@ function generateOperation(num, opp, isRefresh = true){
             results = parseFloat(number[number.length - 1]) * parseFloat(num);
             number.push(num);
           break;  
-          case "/":          
+          case "/":
+            if(!handleDivision(num)){
+              alert("Não é possível dividir um número por zero!");
+              resetNumberGenerator();
+              return false;
+            }else{          
             results = parseFloat(number[number.length - 1]) / parseFloat(num);
             number.push(num);
+            }
           break;
           
         }
-        saveStorage(results,opp, true, mathOperationButtonsIsPressed);
+        if(validateOperation(results)){
+          saveStorage(results,opp, true, mathOperationButtonsIsPressed);
+        }     
         resetNumberGenerator();
         return  
   }
+  
   refresh = false;
   saveStorage(num,opp);
   resetNumberGenerator();
@@ -191,7 +223,8 @@ function deleteStorage(){
 }
 
 //--------------VALIDADORES
-function validaGeracaoNum(){
+
+function handleGenerateNum(){
   let numero = "";
   for (let index = 0; index < numberGenerator.length; index++) {
     numero = numero.concat(numberGenerator[index]);
@@ -203,11 +236,22 @@ function validaGeracaoNum(){
   return numero;
 }
 
-function validaDivisao(num){
-  if(num === "0"){
-    
-    return false
+function validateOperation(result){
+  if((typeof result === "number" && isNaN(result)) || typeof result === "undefined"){
+    alert("Operação inválida, Tente outra vez!!");
+    SCREEN.value = "";
+    return false;
   }
 
-  return true
+  return true;
 }
+
+function handleDivision(num){
+  if(num === "0"){
+    
+    return false;
+  }
+
+  return true;
+}
+
